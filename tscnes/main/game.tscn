@@ -1,0 +1,1455 @@
+[gd_scene load_steps=64 format=2]
+
+[ext_resource path="res://scripts/main/game.gd" type="Script" id=1]
+[ext_resource path="res://sprites/map/net.png" type="Texture" id=2]
+[ext_resource path="res://tscnes/gameplay/player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://tscnes/gameplay/ball.tscn" type="PackedScene" id=4]
+[ext_resource path="res://sprites/map/floor.png" type="Texture" id=5]
+[ext_resource path="res://sprites/map/wall.png" type="Texture" id=6]
+[ext_resource path="res://sprites/map/ceil.png" type="Texture" id=7]
+[ext_resource path="res://fonts/LCD5x8HRU.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://sprites/menu/title.png" type="Texture" id=9]
+[ext_resource path="res://sprites/menu/button.png" type="Texture" id=10]
+[ext_resource path="res://sprites/map/bg.png" type="Texture" id=11]
+[ext_resource path="res://sprites/map/pause.png" type="Texture" id=12]
+[ext_resource path="res://sprites/menu/pause_button.png" type="Texture" id=13]
+[ext_resource path="res://sprites/menu/continue_button.png" type="Texture" id=14]
+[ext_resource path="res://scripts/misc/text_only_numbers.gd" type="Script" id=15]
+[ext_resource path="res://sprites/menu/sfx.png" type="Texture" id=16]
+[ext_resource path="res://sprites/menu/music.png" type="Texture" id=17]
+[ext_resource path="res://sprites/menu/not_active.png" type="Texture" id=18]
+[ext_resource path="res://sounds/menu/button.wav" type="AudioStream" id=19]
+[ext_resource path="res://sounds/gameplay/goal.wav" type="AudioStream" id=20]
+[ext_resource path="res://sounds/gameplay/win.wav" type="AudioStream" id=21]
+[ext_resource path="res://sounds/menu/mysteries of dimenball.wav" type="AudioStream" id=22]
+[ext_resource path="res://tscnes/misc/ad_shower.tscn" type="PackedScene" id=23]
+
+[sub_resource type="CapsuleShape2D" id=3]
+height = 378.0
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 512, 10 )
+
+[sub_resource type="Curve" id=34]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=36]
+colors = PoolColorArray( 0.168945, 0, 1, 1, 0.00392157, 0, 1, 0 )
+
+[sub_resource type="Curve" id=35]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=37]
+colors = PoolColorArray( 1, 0, 0, 1, 1, 0, 0, 0 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 10, 300 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 10, 305 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 41
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 41
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=26]
+size = 85
+font_data = ExtResource( 8 )
+
+[sub_resource type="ShortCut" id=15]
+
+[sub_resource type="DynamicFont" id=7]
+size = 20
+font_data = ExtResource( 8 )
+
+[sub_resource type="ShortCut" id=16]
+
+[sub_resource type="StreamTexture" id=8]
+load_path = "res://.import/button.png-a940d99a54cacd89a16bb41d33b4fb71.stex"
+
+[sub_resource type="DynamicFont" id=9]
+size = 20
+font_data = ExtResource( 8 )
+
+[sub_resource type="ShortCut" id=14]
+
+[sub_resource type="StreamTexture" id=10]
+load_path = "res://.import/button.png-a940d99a54cacd89a16bb41d33b4fb71.stex"
+
+[sub_resource type="DynamicFont" id=11]
+size = 13
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=29]
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=30]
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=41]
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=32]
+size = 127
+outline_size = 7
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=25]
+font_data = ExtResource( 8 )
+
+[sub_resource type="Shader" id=12]
+code = "shader_type canvas_item;
+
+void fragment(){
+	vec2 transform;
+	transform.x = cos(TIME + UV.x)*0.05;
+	transform.y = sin(TIME + UV.x)*0.05;
+	COLOR = texture(TEXTURE,UV + transform) + vec4(transform/0.05,sin(TIME*0.5 + (UV.x+UV.y)*0.001),0.0);
+}"
+
+[sub_resource type="ShaderMaterial" id=13]
+shader = SubResource( 12 )
+
+[sub_resource type="RectangleShape2D" id=23]
+extents = Vector2( 1000, 80 )
+
+[sub_resource type="Shader" id=20]
+code = "shader_type canvas_item;
+
+void fragment(){
+	vec2 transform;
+	transform.x = cos(TIME + UV.x)*0.01;
+	transform.y = sin(TIME + UV.x)*0.01;
+	COLOR = texture(TEXTURE,UV + transform);
+}"
+
+[sub_resource type="ShaderMaterial" id=21]
+shader = SubResource( 20 )
+
+[sub_resource type="RectangleShape2D" id=24]
+extents = Vector2( 1000, 80 )
+
+[sub_resource type="DynamicFont" id=22]
+size = 61
+font_data = ExtResource( 8 )
+
+[sub_resource type="RectangleShape2D" id=40]
+extents = Vector2( 1000, 80 )
+
+[sub_resource type="Animation" id=18]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("../UI/scores:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../UI/menu/buttons:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1.68179 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../UI/menu/title:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 6.49802 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../UI/pause_screen/pause_button:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../UI/pause_screen/pause_button:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("../UI/scores/countdown:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("../UI/scores/countdown:text")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ "3" ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("../UI/win_screen:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("../map/floor/spr/win_red_parts:emitting")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("../map/floor/spr/win_blue_parts:emitting")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("..:is_in_play")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("../UI/sound_edit:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("../UI/menu/gameplay_edit:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=19]
+resource_name = "back_to_menu"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("../UI/scores:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../UI/menu/buttons:rect_position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1.68179, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 600 ), Vector2( 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../UI/menu/title:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 6.49802, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("..")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 2.9, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "reset_postitons"
+}, {
+"args": [ "1v1" ],
+"method": "set_gamemode"
+}, {
+"args": [  ],
+"method": "enable_players"
+}, {
+"args": [  ],
+"method": "enable_all_menu_buttons"
+} ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../UI/pause_screen/pause_button:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("..:state")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "in_menu" ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("../UI/scores/countdown:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("..:is_in_play")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("../UI/win_screen:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("../map/floor/spr/win_blue_parts:emitting")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("../map/floor/spr/win_red_parts:emitting")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("../UI/sound_edit:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("../UI/menu/gameplay_edit:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="Animation" id=17]
+resource_name = "game_start"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("../UI/scores:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true, false, true, false, true, false, true, false, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../UI/menu/buttons:rect_position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1.68179, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 600 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../UI/menu/title:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 6.49802, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("..")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 4.9, 5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "disable_all_menu_buttons"
+}, {
+"args": [  ],
+"method": "reset_postitons"
+}, {
+"args": [  ],
+"method": "reset_score"
+}, {
+"args": [  ],
+"method": "show_player_controls"
+}, {
+"args": [  ],
+"method": "enable_players"
+} ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../UI/pause_screen/pause_button:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("..:state")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ "in_menu", "pregame" ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("../UI/scores/countdown:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("..:is_in_play")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 5 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("../UI/sound_edit:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("../UI/menu/gameplay_edit:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=27]
+resource_name = "second_start"
+length = 1.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("../UI/scores/countdown:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ "3", "2", "1", "GAMEPLAY_GO" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../UI/scores/countdown:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 1.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "reset_postitons"
+}, {
+"args": [  ],
+"method": "start_game"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("..:state")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ "countdown", "playing" ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("..:is_in_play")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=31]
+resource_name = "win_blue"
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:is_in_play")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../UI/win_screen:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ 0.1 ],
+"method": "change_game_time"
+}, {
+"args": [ 1.0 ],
+"method": "change_game_time"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../UI/win_screen/win_text:text")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ "", "ENDGAME_BLUE_WON" ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../map/floor/spr/win_blue_parts:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("../UI/pause_screen/pause_button:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=33]
+resource_name = "win_red"
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:is_in_play")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../UI/win_screen:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ 0.1 ],
+"method": "change_game_time"
+}, {
+"args": [ 1.0 ],
+"method": "change_game_time"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../UI/win_screen/win_text:text")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ "", "ENDGAME_RED_WON" ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../map/floor/spr/win_red_parts:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("../UI/pause_screen/pause_button:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=38]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("../UI/menu/gameplay_edit/score_lbl:custom_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=39]
+resource_name = "def"
+tracks/0/type = "value"
+tracks/0/path = NodePath("../UI/menu/gameplay_edit/score_lbl:custom_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 0.25, 7.21 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="game" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 600.0, 0.0 ],
+"_edit_vertical_guides_": [ 0.0, 1024.0, 512.0 ]
+}
+camera_nodepath = NodePath("misc/camera")
+camera_shake_timer_nodepath = NodePath("misc/camera/shake_timer")
+blue_player_nodepath = NodePath("gameplay/player")
+red_player_nodepath = NodePath("gameplay/player2")
+ball_nodepath = NodePath("gameplay/ball")
+positions_nodepath = NodePath("gameplay/positions")
+ui_nodepath = NodePath("UI")
+animations_nodepath = NodePath("animations/anims")
+score_ammount_nodepath = NodePath("UI/menu/gameplay_edit/score_ammount")
+state = "in_menu"
+
+[node name="misc" type="Node2D" parent="."]
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="camera" type="Camera2D" parent="misc"]
+position = Vector2( 512, 300 )
+current = true
+
+[node name="shake_timer" type="Timer" parent="misc/camera"]
+one_shot = true
+
+[node name="map" type="Node2D" parent="."]
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="net" type="StaticBody2D" parent="map"]
+position = Vector2( 512, 600 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="coll" type="CollisionShape2D" parent="map/net"]
+shape = SubResource( 3 )
+
+[node name="spr" type="Sprite" parent="map/net"]
+scale = Vector2( 2, 1.053 )
+texture = ExtResource( 2 )
+
+[node name="floor" type="RigidBody2D" parent="map"]
+position = Vector2( 512, 600 )
+mode = 3
+contacts_reported = 10
+contact_monitor = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="spr_base" type="ColorRect" parent="map/floor"]
+visible = false
+margin_left = -509.0
+margin_top = -10.0
+margin_right = 514.0
+margin_bottom = 9.0
+color = Color( 0.247059, 0.247059, 0.247059, 1 )
+
+[node name="coll" type="CollisionShape2D" parent="map/floor"]
+position = Vector2( 3, 0 )
+shape = SubResource( 1 )
+
+[node name="spr" type="Sprite" parent="map/floor"]
+texture = ExtResource( 5 )
+
+[node name="win_blue_parts" type="CPUParticles2D" parent="map/floor/spr"]
+show_behind_parent = true
+position = Vector2( -256, 0 )
+emitting = false
+amount = 200
+lifetime = 3.0
+emission_shape = 2
+emission_rect_extents = Vector2( 256, 1 )
+gravity = Vector2( 0, -98 )
+angular_velocity = 720.0
+angular_velocity_random = 1.0
+scale_amount = 17.67
+scale_amount_curve = SubResource( 34 )
+color_ramp = SubResource( 36 )
+
+[node name="win_red_parts" type="CPUParticles2D" parent="map/floor/spr"]
+show_behind_parent = true
+position = Vector2( 256, 0 )
+emitting = false
+amount = 200
+lifetime = 3.0
+emission_shape = 2
+emission_rect_extents = Vector2( 256, 1 )
+gravity = Vector2( 0, -98 )
+angular_velocity = 720.0
+angular_velocity_random = 1.0
+scale_amount = 17.67
+scale_amount_curve = SubResource( 35 )
+color_ramp = SubResource( 37 )
+
+[node name="ceiling" type="StaticBody2D" parent="map"]
+position = Vector2( 512, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="spr_base" type="ColorRect" parent="map/ceiling"]
+margin_left = -509.0
+margin_top = -10.0
+margin_right = 514.0
+margin_bottom = 9.0
+color = Color( 0.247059, 0.247059, 0.247059, 1 )
+
+[node name="coll" type="CollisionShape2D" parent="map/ceiling"]
+position = Vector2( 3, 0 )
+shape = SubResource( 1 )
+
+[node name="spr" type="Sprite" parent="map/ceiling"]
+texture = ExtResource( 7 )
+
+[node name="wall_l" type="StaticBody2D" parent="map"]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="spr_base" type="ColorRect" parent="map/wall_l"]
+visible = false
+margin_left = -11.0
+margin_right = 10.0
+margin_bottom = 609.0
+color = Color( 0.242188, 0.242188, 0.242188, 1 )
+
+[node name="coll" type="CollisionShape2D" parent="map/wall_l"]
+position = Vector2( 0, 300 )
+shape = SubResource( 2 )
+
+[node name="spr" type="Sprite" parent="map/wall_l"]
+position = Vector2( 0, 300 )
+texture = ExtResource( 6 )
+
+[node name="wall_r" type="StaticBody2D" parent="map"]
+position = Vector2( 1023, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="spr_base" type="ColorRect" parent="map/wall_r"]
+visible = false
+margin_left = -11.0
+margin_right = 10.0
+margin_bottom = 609.0
+color = Color( 0.242188, 0.242188, 0.242188, 1 )
+
+[node name="coll" type="CollisionShape2D" parent="map/wall_r"]
+position = Vector2( 0, 300 )
+shape = SubResource( 2 )
+
+[node name="spr" type="Sprite" parent="map/wall_r"]
+position = Vector2( 0, 300 )
+texture = ExtResource( 6 )
+flip_h = true
+
+[node name="barrier" type="StaticBody2D" parent="map"]
+position = Vector2( 512, 204 )
+collision_layer = 2
+collision_mask = 2
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="coll" type="CollisionShape2D" parent="map/barrier"]
+position = Vector2( 0, 103 )
+shape = SubResource( 4 )
+
+[node name="gameplay" type="Node2D" parent="."]
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="player" parent="gameplay" instance=ExtResource( 3 )]
+position = Vector2( 256, 540 )
+player_id = "1"
+color = Color( 0.423529, 0.407843, 1, 1 )
+target_nodepath = NodePath("../ball")
+
+[node name="player2" parent="gameplay" instance=ExtResource( 3 )]
+position = Vector2( 768, 540 )
+player_id = "2"
+color = Color( 1, 0.392157, 0.392157, 1 )
+target_nodepath = NodePath("../ball")
+
+[node name="ball" parent="gameplay" instance=ExtResource( 4 )]
+position = Vector2( 512, 91 )
+mode = 1
+sleeping = true
+
+[node name="positions" type="Node2D" parent="gameplay"]
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="blue" type="Position2D" parent="gameplay/positions"]
+position = Vector2( 256, 540 )
+
+[node name="red" type="Position2D" parent="gameplay/positions"]
+position = Vector2( 768, 540 )
+
+[node name="ball" type="Position2D" parent="gameplay/positions"]
+position = Vector2( 512, 91 )
+
+[node name="UI" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="scores" type="Control" parent="UI"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="blue" type="Label" parent="UI/scores"]
+margin_left = 226.0
+margin_top = 40.0
+margin_right = 314.0
+margin_bottom = 127.0
+custom_fonts/font = SubResource( 5 )
+text = "0"
+autowrap = true
+
+[node name="red" type="Label" parent="UI/scores"]
+margin_left = 738.0
+margin_top = 40.0
+margin_right = 835.0
+margin_bottom = 136.0
+custom_fonts/font = SubResource( 6 )
+text = "0"
+autowrap = true
+
+[node name="countdown" type="Label" parent="UI/scores"]
+visible = false
+margin_left = 10.0
+margin_top = 171.0
+margin_right = 1020.0
+margin_bottom = 432.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 26 )
+text = "3"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="menu" type="Control" parent="UI"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="title" type="Sprite" parent="UI/menu"]
+position = Vector2( 512, 136 )
+texture = ExtResource( 9 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="buttons" type="Control" parent="UI/menu"]
+margin_right = 40.0
+margin_bottom = 39.9999
+
+[node name="1v1" type="Button" parent="UI/menu/buttons"]
+margin_left = 421.0
+margin_top = 267.0
+margin_right = 603.0
+margin_bottom = 358.0
+rect_pivot_offset = Vector2( 91, 46 )
+focus_mode = 1
+enabled_focus_mode = 1
+shortcut = SubResource( 15 )
+icon = ExtResource( 10 )
+flat = true
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="lbl" type="Label" parent="UI/menu/buttons/1v1"]
+margin_left = -14.0
+margin_top = 36.0
+margin_right = 196.0
+margin_bottom = 56.0
+custom_fonts/font = SubResource( 7 )
+text = "BUTTON_PLAY_1V1"
+align = 1
+
+[node name="1vAI" type="Button" parent="UI/menu/buttons"]
+margin_left = 421.0
+margin_top = 384.0
+margin_right = 603.0
+margin_bottom = 475.0
+rect_pivot_offset = Vector2( 91, 46 )
+focus_mode = 1
+enabled_focus_mode = 1
+shortcut = SubResource( 16 )
+icon = SubResource( 8 )
+flat = true
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="lbl" type="Label" parent="UI/menu/buttons/1vAI"]
+margin_left = -14.0
+margin_top = 36.0
+margin_right = 196.0
+margin_bottom = 56.0
+custom_fonts/font = SubResource( 9 )
+text = "BUTTON_PLAY_1VAI"
+align = 1
+
+[node name="change_translation" type="Button" parent="UI/menu/buttons"]
+margin_left = 421.0
+margin_top = 500.0
+margin_right = 603.0
+margin_bottom = 591.0
+rect_pivot_offset = Vector2( 91, 46 )
+focus_mode = 1
+enabled_focus_mode = 1
+shortcut = SubResource( 14 )
+icon = SubResource( 10 )
+flat = true
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="lbl" type="Label" parent="UI/menu/buttons/change_translation"]
+margin_left = -14.0
+margin_top = 32.0
+margin_right = 196.0
+margin_bottom = 75.0
+custom_fonts/font = SubResource( 11 )
+text = "BUTTON_CHANGE_LANGUAGE"
+align = 1
+
+[node name="gameplay_edit" type="Control" parent="UI/menu"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="score_lbl" type="Label" parent="UI/menu/gameplay_edit"]
+margin_left = 10.0
+margin_top = 11.0
+margin_right = 194.0
+margin_bottom = 25.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 29 )
+text = "SETTINGS_SCORE_AMMOUNT"
+
+[node name="score_ammount" type="LineEdit" parent="UI/menu/gameplay_edit"]
+margin_left = 10.0
+margin_top = 28.0
+margin_right = 152.0
+margin_bottom = 55.0
+custom_fonts/font = SubResource( 30 )
+text = "10"
+deselect_on_focus_loss_enabled = false
+script = ExtResource( 15 )
+
+[node name="version" type="Label" parent="UI/menu"]
+margin_left = 10.0
+margin_top = 575.0
+margin_right = 50.0
+margin_bottom = 589.0
+custom_fonts/font = SubResource( 41 )
+text = "VERSION:"
+
+[node name="sound_edit" type="Control" parent="UI"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="sfx" type="Button" parent="UI/sound_edit"]
+margin_left = 738.0
+margin_top = 11.0
+margin_right = 862.0
+margin_bottom = 129.0
+icon = ExtResource( 16 )
+flat = true
+
+[node name="not_active" type="Sprite" parent="UI/sound_edit/sfx"]
+visible = false
+texture = ExtResource( 18 )
+centered = false
+
+[node name="music" type="Button" parent="UI/sound_edit"]
+margin_left = 862.0
+margin_top = 9.0
+margin_right = 986.0
+margin_bottom = 127.0
+icon = ExtResource( 17 )
+flat = true
+
+[node name="not_active" type="Sprite" parent="UI/sound_edit/music"]
+visible = false
+texture = ExtResource( 18 )
+centered = false
+
+[node name="win_screen" type="Control" parent="UI"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="win_text" type="Label" parent="UI/win_screen"]
+margin_top = 158.0
+margin_right = 1023.0
+margin_bottom = 359.0
+custom_fonts/font = SubResource( 32 )
+align = 1
+valign = 1
+autowrap = true
+
+[node name="back_button" type="TouchScreenButton" parent="UI/win_screen"]
+position = Vector2( 427, 479 )
+normal = ExtResource( 10 )
+
+[node name="txt" type="Label" parent="UI/win_screen/back_button"]
+margin_right = 171.0
+margin_bottom = 84.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 25 )
+text = "BUTTON_BACK"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="bg" type="CanvasLayer" parent="UI"]
+layer = -1
+follow_viewport_enable = true
+
+[node name="bg" type="Sprite" parent="UI/bg"]
+modulate = Color( 1, 1, 1, 0.0705882 )
+material = SubResource( 13 )
+texture = ExtResource( 11 )
+centered = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="pause_screen" type="CanvasLayer" parent="UI"]
+follow_viewport_enable = true
+
+[node name="pause_button" type="TouchScreenButton" parent="UI/pause_screen"]
+visible = false
+position = Vector2( 473, 40 )
+normal = ExtResource( 13 )
+shape = SubResource( 23 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="screen" type="Sprite" parent="UI/pause_screen"]
+visible = false
+material = SubResource( 21 )
+texture = ExtResource( 12 )
+centered = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="continue_button" type="TouchScreenButton" parent="UI/pause_screen/screen"]
+position = Vector2( 488, 287 )
+normal = ExtResource( 14 )
+shape = SubResource( 24 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="txt" type="Label" parent="UI/pause_screen/screen"]
+margin_left = 192.0
+margin_top = 186.0
+margin_right = 837.0
+margin_bottom = 313.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 22 )
+text = "GAMEPLAY_PAUSED"
+align = 1
+autowrap = true
+
+[node name="back_button" type="TouchScreenButton" parent="UI/pause_screen/screen"]
+position = Vector2( 427, 479 )
+normal = ExtResource( 10 )
+shape = SubResource( 40 )
+
+[node name="txt" type="Label" parent="UI/pause_screen/screen/back_button"]
+margin_right = 171.0
+margin_bottom = 84.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 25 )
+text = "BUTTON_BACK"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="animations" type="Node" parent="."]
+
+[node name="anims" type="AnimationPlayer" parent="animations"]
+anims/RESET = SubResource( 18 )
+anims/back_to_menu = SubResource( 19 )
+anims/game_start = SubResource( 17 )
+anims/second_start = SubResource( 27 )
+anims/win_blue = SubResource( 31 )
+anims/win_red = SubResource( 33 )
+
+[node name="score_wrong" type="AnimationPlayer" parent="animations"]
+anims/RESET = SubResource( 38 )
+anims/def = SubResource( 39 )
+
+[node name="sound_and_music" type="Node" parent="."]
+
+[node name="music" type="AudioStreamPlayer" parent="sound_and_music"]
+stream = ExtResource( 22 )
+volume_db = -10.0
+autoplay = true
+bus = "Music"
+
+[node name="button" type="AudioStreamPlayer" parent="sound_and_music"]
+stream = ExtResource( 19 )
+volume_db = -10.0
+bus = "SFX"
+
+[node name="goal" type="AudioStreamPlayer" parent="sound_and_music"]
+stream = ExtResource( 20 )
+volume_db = -20.0
+bus = "SFX"
+
+[node name="win" type="AudioStreamPlayer" parent="sound_and_music"]
+stream = ExtResource( 21 )
+volume_db = -20.0
+bus = "SFX"
+
+[node name="misc_for_scripts" type="Node" parent="."]
+
+[node name="ad_shower" parent="misc_for_scripts" instance=ExtResource( 23 )]
+
+[connection signal="timeout" from="misc/camera/shake_timer" to="." method="_on_shake_timer_timeout"]
+[connection signal="body_entered" from="map/floor" to="." method="_on_floor_body_entered"]
+[connection signal="pressed" from="UI/menu/buttons/1v1" to="." method="_on_1v1_pressed"]
+[connection signal="pressed" from="UI/menu/buttons/1vAI" to="." method="_on_1vAI_pressed"]
+[connection signal="pressed" from="UI/menu/buttons/change_translation" to="." method="_on_change_translation_pressed"]
+[connection signal="text_changed" from="UI/menu/gameplay_edit/score_ammount" to="UI/menu/gameplay_edit/score_ammount" method="_on_text_changed"]
+[connection signal="pressed" from="UI/sound_edit/sfx" to="." method="_on_sfx_pressed"]
+[connection signal="pressed" from="UI/sound_edit/music" to="." method="_on_music_pressed"]
+[connection signal="pressed" from="UI/win_screen/back_button" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="UI/pause_screen/pause_button" to="." method="_on_pause_button_pressed"]
+[connection signal="pressed" from="UI/pause_screen/screen/continue_button" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="UI/pause_screen/screen/back_button" to="." method="_on_back_button_pressed"]
+[connection signal="ad_closed" from="misc_for_scripts/ad_shower" to="." method="_on_ad_shower_ad_closed"]
+[connection signal="ad_closed" from="misc_for_scripts/ad_shower" to="misc_for_scripts/ad_shower" method="_on_ad_shower_ad_closed"]
